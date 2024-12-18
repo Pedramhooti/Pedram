@@ -1,1 +1,69 @@
-# Pedram
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محاسبه قیمت محصول</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            text-align: center;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            margin: 50px auto;
+            padding: 20px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        h3 {
+            color: #333;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>محاسبه قیمت محصول</h2>
+        <label>لطفا کد روی محصول را وارد کنید:</label><br>
+        <input type="text" id="inputCode" placeholder="کد محصول">
+        <button onclick="calculate()">محاسبه</button>
+        <h3 id="result"></h3>
+    </div>
+
+    <script>
+        function toEnglishNumber(str) {
+            // تبدیل اعداد فارسی و عربی به انگلیسی
+            return str.replace(/[۰-۹]/g, function(w) {
+                return String.fromCharCode(w.charCodeAt(0) - 1728);
+            }).replace(/[٠-٩]/g, function(w) {
+                return String.fromCharCode(w.charCodeAt(0) - 1584);
+            });
+        }
+
+        function calculate() {
+            let inputCode = document.getElementById("inputCode").value;
+            inputCode = toEnglishNumber(inputCode); // تبدیل به عدد انگلیسی
+
+            const number = parseFloat(inputCode);
+            if (number) {
+                const result = (number * 25.8).toFixed(2);
+                document.getElementById("result").innerText = "قیمت نهایی محصول: " + result + " تومان";
+            } else {
+                alert("لطفاً یک کد معتبر وارد کنید.");
+            }
+        }
+    </script>
+</body>
+</html>
