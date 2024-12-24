@@ -5,91 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>محاسبه قیمت محصول</title>
     <style>
-        * {
+        body {
+            font-family: sans-serif;
+            text-align: center;
+            background-color: #f9f9f9;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
-
-        body {
-            font-family: 'Vazir', sans-serif;
-            background-color: #e0f7fa;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            color: #004d40;
-        }
-
         .container {
-            background-color: #ffffff;
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            width: 90%;
-            max-width: 400px;
-            padding: 30px;
-            text-align: center;
+            margin: 50px auto;
+            padding: 20px;
         }
-
-        h2 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            color: #00695c;
-        }
-
-        label {
-            font-size: 1rem;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        input {
-            width: 100%;
+        input, button {
             padding: 10px;
-            margin: 15px 0;
-            border: 1px solid #b2dfdb;
-            border-radius: 10px;
-            font-size: 1rem;
+            margin: 10px;
+            font-size: 16px;
         }
-
         button {
-            width: 100%;
-            padding: 10px;
-            background-color: #00796b;
+            background-color: #4CAF50;
             color: white;
             border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
             cursor: pointer;
-            transition: background-color 0.3s ease;
         }
-
-        button:hover {
-            background-color: #004d40;
-        }
-
         h3 {
+            color: #333;
             margin-top: 20px;
-            font-size: 1.2rem;
-            color: #004d40;
         }
-
-        footer {
-            margin-top: 20px;
-            font-size: 0.9rem;
-            color: #00796b;
-        }
-
     </style>
 </head>
 <body>
     <div class="container">
         <h2>محاسبه قیمت محصول</h2>
-        <label for="inputCode">کد محصول را وارد کنید:</label>
-        <input type="text" id="inputCode" placeholder="مثلاً 123">
-        <button onclick="calculate()">محاسبه قیمت</button>
+        <label>لطفا کد روی محصول را وارد کنید:</label><br>
+        <input type="text" id="inputCode" placeholder="کد محصول">
+        <button onclick="calculate()">محاسبه</button>
         <h3 id="result"></h3>
-        <footer>طراحی شده توسط فروشگاه بزرگ ماهل</footer>
     </div>
 
     <script>
@@ -107,9 +57,10 @@
             inputCode = toEnglishNumber(inputCode); // تبدیل به عدد انگلیسی
 
             const number = parseFloat(inputCode);
-            if (number && number > 0) {
-                const result = Math.round(number * 25.8); // گرد کردن به نزدیک‌ترین عدد صحیح
-                document.getElementById("result").innerText = "قیمت نهایی محصول: " + result.toLocaleString('fa') + " تومان";
+            if (number) {
+                const increasedNumber = number * 1.2; // اضافه کردن ۲۰ درصد
+                const result = (increasedNumber * 22).toFixed(2); // ضرب در ۲۲
+                document.getElementById("result").innerText = "قیمت نهایی محصول: " + result + " تومان";
             } else {
                 alert("لطفاً یک کد معتبر وارد کنید.");
             }
