@@ -97,4 +97,41 @@
 <body>
     <div class="container">
         <h2>محاسبه قیمت محصول</h2>
-        <label for
+        <label for="inputCode">لطفاً کد روی محصول را وارد کنید:</label>
+        <input type="text" id="inputCode" placeholder="مثال: ۱۲۳۴">
+        <button onclick="calculate()">محاسبه قیمت</button>
+        <h3 id="result"></h3>
+    </div>
+
+    <script>
+        // تابع تبدیل اعداد فارسی و عربی به انگلیسی
+        function toEnglishNumber(str) {
+            return str.replace(/[۰-۹]/g, function(w) {
+                return String.fromCharCode(w.charCodeAt(0) - 1728);
+            }).replace(/[٠-٩]/g, function(w) {
+                return String.fromCharCode(w.charCodeAt(0) - 1584);
+            });
+        }
+
+        // تابع جداکننده هزارگان برای نمایش خواناتر قیمت
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        // تابع محاسبه قیمت
+        function calculate() {
+            const inputCode = document.getElementById("inputCode").value;
+            const englishNumber = toEnglishNumber(inputCode); // تبدیل به عدد انگلیسی
+            const number = parseFloat(englishNumber);
+
+            if (!isNaN(number) && number > 0) {
+                const increasedNumber = number * 1.2; // اضافه کردن ۲۰ درصد
+                const finalPrice = (increasedNumber * 24).toFixed(2); // ضرب در ۲۴
+                document.getElementById("result").innerText = `قیمت نهایی محصول: ${formatNumber(finalPrice)} تومان`;
+            } else {
+                alert("لطفاً یک کد معتبر وارد کنید!");
+            }
+        }
+    </script>
+</body>
+</html>
