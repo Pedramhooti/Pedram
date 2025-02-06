@@ -1,70 +1,100 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>محاسبه قیمت محصول</title>
     <style>
+        /* تنظیمات کلی */
         body {
-            font-family: sans-serif;
-            text-align: center;
-            background-color: #f9f9f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
             margin: 0;
             padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
         }
+
         .container {
-            margin: 50px auto;
-            padding: 20px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            animation: fadeIn 0.5s ease-in-out;
         }
-        input, button {
-            padding: 10px;
-            margin: 10px;
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
             font-size: 16px;
+            color: #555;
         }
+
+        input {
+            width: calc(100% - 24px);
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
         button {
+            width: 100%;
+            padding: 12px;
             background-color: #4CAF50;
             color: white;
             border: none;
+            border-radius: 8px;
+            font-size: 16px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
-        h3 {
-            color: #333;
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
             margin-top: 20px;
+            font-size: 18px;
+            color: #2c3e50;
+            font-weight: bold;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        /* انیمیشن‌ها */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>محاسبه قیمت محصول</h2>
-        <label>لطفا کد روی محصول را وارد کنید:</label><br>
-        <input type="text" id="inputCode" placeholder="کد محصول">
-        <button onclick="calculate()">محاسبه</button>
-        <h3 id="result"></h3>
-    </div>
-
-    <script>
-        function toEnglishNumber(str) {
-            // تبدیل اعداد فارسی و عربی به انگلیسی
-            return str.replace(/[۰-۹]/g, function(w) {
-                return String.fromCharCode(w.charCodeAt(0) - 1728);
-            }).replace(/[٠-٩]/g, function(w) {
-                return String.fromCharCode(w.charCodeAt(0) - 1584);
-            });
-        }
-
-        function calculate() {
-            let inputCode = document.getElementById("inputCode").value;
-            inputCode = toEnglishNumber(inputCode); // تبدیل به عدد انگلیسی
-
-            const number = parseFloat(inputCode);
-            if (number) {
-                const increasedNumber = number * 1.2; // اضافه کردن ۲۰ درصد
-                const result = (increasedNumber * 23.5).toFixed(2); // ضرب در ۲۳.۵
-                document.getElementById("result").innerText = "قیمت نهایی محصول: " + result + " تومان";
-            } else {
-                alert("لطفاً یک کد معتبر وارد کنید.");
-            }
-        }
-    </script>
-</body>
-</html>
+        <label for
