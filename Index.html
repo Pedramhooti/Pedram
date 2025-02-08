@@ -5,19 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>محاسبه قیمت محصول</title>
     <style>
-        /* تنظیمات کلی */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f0f4f8;
-            margin: 0;
-            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            color: #333;
+            margin: 0;
         }
-
         .container {
             background-color: #ffffff;
             padding: 30px;
@@ -26,71 +22,24 @@
             max-width: 400px;
             width: 100%;
             text-align: center;
-            animation: fadeIn 0.5s ease-in-out;
         }
-
-        h2 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-            font-size: 24px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 10px;
-            font-size: 16px;
-            color: #555;
-        }
-
-        input {
+        input, button {
             width: calc(100% - 24px);
             padding: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             border: 1px solid #ddd;
             border-radius: 8px;
             font-size: 16px;
-            transition: border-color 0.3s ease;
         }
-
-        input:focus {
-            border-color: #4CAF50;
-            outline: none;
-        }
-
         button {
-            width: 100%;
-            padding: 12px;
             background-color: #4CAF50;
             color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
         }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
         #result {
             margin-top: 20px;
             font-size: 18px;
-            color: #2c3e50;
             font-weight: bold;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-
-        /* انیمیشن‌ها */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
     </style>
 </head>
@@ -104,29 +53,33 @@
     </div>
 
     <script>
-        // تابع تبدیل اعداد فارسی و عربی به انگلیسی
         function toEnglishNumber(str) {
-            return str.replace(/[۰-۹]/g, function(w) {
-                return String.fromCharCode(w.charCodeAt(0) - 1728);
-            }).replace(/[٠-٩]/g, function(w) {
-                return String.fromCharCode(w.charCodeAt(0) - 1584);
-            });
+            return str.replace(/[۰-۹]/g, d => String.fromCharCode(d.charCodeAt(0) - 1728))
+                      .replace(/[٠-٩]/g, d => String.fromCharCode(d.charCodeAt(0) - 1584));
         }
 
-        // تابع جداکننده هزارگان برای نمایش خواناتر قیمت
         function formatNumber(num) {
             return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
 
-        // تابع محاسبه قیمت
         function calculate() {
-            const inputCode = document.getElementById("inputCode").value;
-            const englishNumber = toEnglishNumber(inputCode); // تبدیل به عدد انگلیسی
-            const number = parseFloat(englishNumber);
+            const TAX_RATE = 1.2;
+            const MULTIPLIER = 25;
+
+            let inputCode = document.getElementById("inputCode").value.trim();
+            inputCode = toEnglishNumber(inputCode); // تبدیل اعداد فارسی به انگلیسی
+            
+            if (!/^\d+$/.test(inputCode)) {
+                alert("لطفاً فقط عدد وارد کنید!");
+                return;
+            }
+
+            const number = parseFloat(inputCode);
+            console.log("Converted Number:", number); // بررسی مقدار در کنسول
 
             if (!isNaN(number) && number > 0) {
-                const increasedNumber = number * 1.2; // اضافه کردن ۲۰ درصد
-                const finalPrice = (increasedNumber * 24).toFixed(2); // ضرب در ۲۴
+                const increasedNumber = number * TAX_RATE;
+                const finalPrice = (increasedNumber * MULTIPLIER).toFixed(2);
                 document.getElementById("result").innerText = `قیمت نهایی محصول: ${formatNumber(finalPrice)} تومان`;
             } else {
                 alert("لطفاً یک کد معتبر وارد کنید!");
