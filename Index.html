@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>محاسبه قیمت محصول</title>
+    <link rel="apple-touch-icon" href="icon.png"> <!-- اضافه کردن آیکون -->
     <style>
-        body{font-family:Arial,sans-serif;background:#f0f4f8;display:flex;justify-content:center;align-items:center;height:100vh;margin:0}
-        .container{background:#fff;padding:20px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);max-width:400px;width:100%;text-align:center}
-        input,button{width:calc(100% - 20px);padding:10px;margin-bottom:10px;border:1px solid #ddd;border-radius:6px;font-size:16px}
-        button{background:#4CAF50;color:#fff;cursor:pointer}
-        #result{margin-top:20px;font-size:18px;font-weight:bold}
+        body { font-family: Arial, sans-serif; background: #f0f4f8; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); max-width: 400px; width: 100%; text-align: center; }
+        input, button { width: calc(100% - 20px); padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 16px; }
+        button { background: #4CAF50; color: #fff; cursor: pointer; }
+        #result { margin-top: 20px; font-size: 18px; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -21,25 +22,25 @@
         <h3 id="result"></h3>
     </div>
     <script>
-        function toEnglishNumber(str){
-            return str.replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+        function toEnglishNumber(str) {
+            return str.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
         }
-        function formatNumber(num){
-            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",");
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
-        function calculate(){
-            const TAX_RATE=1.2,MULTIPLIER=25.5; // تغییر اینجا
-            let inputCode=document.getElementById("inputCode").value.trim();
-            inputCode=toEnglishNumber(inputCode);
-            if(!/^\d+$/.test(inputCode)){
+        function calculate() {
+            const TAX_RATE = 1.2, MULTIPLIER = 25.5; 
+            let inputCode = document.getElementById("inputCode").value.trim();
+            inputCode = toEnglishNumber(inputCode);
+            if (!/^\d+$/.test(inputCode)) {
                 alert("لطفاً فقط عدد وارد کنید!");
                 return;
             }
-            const number=parseFloat(inputCode);
-            if(!isNaN(number)&&number>0){
-                const finalPrice=(number*TAX_RATE*MULTIPLIER).toFixed(2);
-                document.getElementById("result").innerText=`قیمت نهایی محصول: ${formatNumber(finalPrice)} تومان`;
-            }else{
+            const number = parseFloat(inputCode);
+            if (!isNaN(number) && number > 0) {
+                const finalPrice = (number * TAX_RATE * MULTIPLIER).toFixed(2);
+                document.getElementById("result").innerText = `قیمت نهایی محصول: ${formatNumber(finalPrice)} تومان`;
+            } else {
                 alert("لطفاً یک کد معتبر وارد کنید!");
             }
         }
