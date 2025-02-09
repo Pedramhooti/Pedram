@@ -5,42 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>محاسبه قیمت محصول</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f4f8;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            width: 100%;
-            text-align: center;
-        }
-        input, button {
-            width: calc(100% - 24px);
-            padding: 12px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            cursor: pointer;
-        }
-        #result {
-            margin-top: 20px;
-            font-size: 18px;
-            font-weight: bold;
-        }
+        body{font-family:Arial,sans-serif;background:#f0f4f8;display:flex;justify-content:center;align-items:center;height:100vh;margin:0}
+        .container{background:#fff;padding:20px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);max-width:400px;width:100%;text-align:center}
+        input,button{width:calc(100% - 20px);padding:10px;margin-bottom:10px;border:1px solid #ddd;border-radius:6px;font-size:16px}
+        button{background:#4CAF50;color:#fff;cursor:pointer}
+        #result{margin-top:20px;font-size:18px;font-weight:bold}
     </style>
 </head>
 <body>
@@ -51,37 +20,26 @@
         <button onclick="calculate()">محاسبه قیمت</button>
         <h3 id="result"></h3>
     </div>
-
     <script>
-        function toEnglishNumber(str) {
-            return str.replace(/[۰-۹]/g, d => String.fromCharCode(d.charCodeAt(0) - 1728))
-                      .replace(/[٠-٩]/g, d => String.fromCharCode(d.charCodeAt(0) - 1584));
+        function toEnglishNumber(str){
+            return str.replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d));
         }
-
-        function formatNumber(num) {
-            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        function formatNumber(num){
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",");
         }
-
-        function calculate() {
-            const TAX_RATE = 1.2;
-            const MULTIPLIER = 25;
-
-            let inputCode = document.getElementById("inputCode").value.trim();
-            inputCode = toEnglishNumber(inputCode); // تبدیل اعداد فارسی به انگلیسی
-            
-            if (!/^\d+$/.test(inputCode)) {
+        function calculate(){
+            const TAX_RATE=1.2,MULTIPLIER=25;
+            let inputCode=document.getElementById("inputCode").value.trim();
+            inputCode=toEnglishNumber(inputCode);
+            if(!/^\d+$/.test(inputCode)){
                 alert("لطفاً فقط عدد وارد کنید!");
                 return;
             }
-
-            const number = parseFloat(inputCode);
-            console.log("Converted Number:", number); // بررسی مقدار در کنسول
-
-            if (!isNaN(number) && number > 0) {
-                const increasedNumber = number * TAX_RATE;
-                const finalPrice = (increasedNumber * MULTIPLIER).toFixed(2);
-                document.getElementById("result").innerText = `قیمت نهایی محصول: ${formatNumber(finalPrice)} تومان`;
-            } else {
+            const number=parseFloat(inputCode);
+            if(!isNaN(number)&&number>0){
+                const finalPrice=(number*TAX_RATE*MULTIPLIER).toFixed(2);
+                document.getElementById("result").innerText=`قیمت نهایی محصول: ${formatNumber(finalPrice)} تومان`;
+            }else{
                 alert("لطفاً یک کد معتبر وارد کنید!");
             }
         }
