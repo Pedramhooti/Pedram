@@ -28,7 +28,7 @@
             return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",");
         }
         function calculate(){
-            const TAX_RATE=1.2,MULTIPLIER=25;
+            const TAX_RATE=1.2,MULTIPLIER=25.5; // تغییر اینجا
             let inputCode=document.getElementById("inputCode").value.trim();
             inputCode=toEnglishNumber(inputCode);
             if(!/^\d+$/.test(inputCode)){
