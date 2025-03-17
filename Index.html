@@ -28,17 +28,17 @@
             return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",");
         }
         function calculate(){
-            const TAX_RATE=1.2,MULTIPLIER=26; // مقدار ۲۶ تنظیم شد
-            let inputCode=document.getElementById("inputCode").value.trim();
-            inputCode=toEnglishNumber(inputCode);
+            const TAX_RATE = 1.2, MULTIPLIER = 27; // مقدار ۲۷ تنظیم شد
+            let inputCode = document.getElementById("inputCode").value.trim();
+            inputCode = toEnglishNumber(inputCode);
             if(!/^\d+$/.test(inputCode)){
                 alert("لطفاً فقط عدد وارد کنید!");
                 return;
             }
-            const number=parseFloat(inputCode);
-            if(!isNaN(number)&&number>0){
-                const finalPrice=(number*TAX_RATE*MULTIPLIER).toFixed(2);
-                document.getElementById("result").innerText=`قیمت نهایی محصول: ${formatNumber(finalPrice)} تومان`;
+            const number = parseFloat(inputCode);
+            if(!isNaN(number) && number > 0){
+                const finalPrice = (number * TAX_RATE * MULTIPLIER).toFixed(2);
+                document.getElementById("result").innerText = `قیمت نهایی محصول: ${formatNumber(finalPrice)} تومان`;
             }else{
                 alert("لطفاً یک کد معتبر وارد کنید!");
             }
