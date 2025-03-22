@@ -67,6 +67,14 @@
             const finalPrice = (number * TAX_RATE * MULTIPLIER).toFixed(2);
             document.getElementById("result").innerText = `قیمت نهایی محصول: ${formatNumber(finalPrice)} تومان`;
         }
+
+        // اضافه کردن event listener برای فشردن کلید Enter
+        document.getElementById("inputCode").addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                calculate();
+            }
+        });
     </script>
 </body>
 </html>
