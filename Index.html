@@ -10,6 +10,23 @@
         input,button{width:calc(100% - 20px);padding:10px;margin-bottom:10px;border:1px solid #ddd;border-radius:6px;font-size:16px}
         button{background:#4CAF50;color:#fff;cursor:pointer}
         #result{margin-top:20px;font-size:18px;font-weight:bold}
+        .notice{
+            margin-top:15px;
+            padding:10px;
+            background:#fff3cd;
+            color:#856404;
+            border:1px solid #ffeeba;
+            border-radius:6px;
+            font-size:14px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+        .notice::before{
+            content:"⚠️";
+            font-size:18px;
+            margin-left:8px;
+        }
     </style>
 </head>
 <body>
@@ -19,6 +36,7 @@
         <input type="text" id="inputCode" placeholder="مثال: ۱۲۳۴">
         <button onclick="calculate()">محاسبه قیمت</button>
         <h3 id="result"></h3>
+        <p class="notice">قیمت‌ها حدودی هستند. برای قیمت دقیق به صندوق مراجعه کنید.</p>
     </div>
     <script>
         function toEnglishNumber(str){
