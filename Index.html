@@ -22,26 +22,32 @@
     </div>
     <script>
         function toEnglishNumber(str){
-            return str.replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+            return str.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
+                      .replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
         }
+
         function formatNumber(num){
-            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",");
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
+
         function calculate(){
-            const TAX_RATE=1.2, MULTIPLIER=28; // مقدار ۲۸ تنظیم شد
-            let inputCode=document.getElementById("inputCode").value.trim();
-            inputCode=toEnglishNumber(inputCode);
-            if(!/^\d+$/.test(inputCode)){
+            const TAX_RATE = 1.2, MULTIPLIER = 28.5; // مقدار ۲۸.۵ تنظیم شد
+            let inputCode = document.getElementById("inputCode").value.trim();
+            inputCode = toEnglishNumber(inputCode);
+
+            if (!/^\d+$/.test(inputCode)){
                 alert("لطفاً فقط عدد وارد کنید!");
                 return;
             }
-            const number=parseFloat(inputCode);
-            if(!isNaN(number)&&number>0){
-                const finalPrice=(number*TAX_RATE*MULTIPLIER).toFixed(2);
-                document.getElementById("result").innerText=`قیمت نهایی محصول: ${formatNumber(finalPrice)} تومان`;
-            }else{
-                alert("لطفاً یک کد معتبر وارد کنید!");
+
+            const number = parseFloat(inputCode);
+            if (number <= 0){
+                alert("عدد باید بزرگ‌تر از صفر باشد!");
+                return;
             }
+
+            const finalPrice = (number * TAX_RATE * MULTIPLIER).toFixed(2);
+            document.getElementById("result").innerText = `قیمت نهایی محصول: ${formatNumber(finalPrice)} تومان`;
         }
     </script>
 </body>
