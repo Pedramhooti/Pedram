@@ -9,6 +9,7 @@
             font-family: Arial, sans-serif;
             background: #f0f4f8;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -58,6 +59,31 @@
             font-size: 18px;
             margin-left: 8px;
         }
+        .link-container {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+        }
+        .link-btn {
+            display: inline-block;
+            text-decoration: none;
+            font-size: 16px;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            min-width: 180px;
+        }
+        .instagram-link {
+            background: #E4405F;
+        }
+        .website-link {
+            background: #007BFF;
+        }
     </style>
 </head>
 <body>
@@ -68,6 +94,11 @@
         <button onclick="calculate()">محاسبه قیمت</button>
         <h3 id="result"></h3>
         <p class="notice">قیمت‌ها حدودی هستند. برای قیمت دقیق به صندوق مراجعه کنید.</p>
+    </div>
+
+    <div class="link-container">
+        <a href="https://www.instagram.com/nili.face" target="_blank" class="link-btn instagram-link">ورود به صفحه اینستاگرام ما</a>
+        <a href="https://www.nili.shop" target="_blank" class="link-btn website-link">ورود به وب‌سایت ما</a>
     </div>
 
     <script>
@@ -81,7 +112,7 @@
         }
 
         function calculate() {
-            const TAX_RATE = 1.2, MULTIPLIER = 28.5; // مقدار ۲۸.۵ تنظیم شد
+            const TAX_RATE = 1.2, MULTIPLIER = 28.5;
             let inputCode = document.getElementById("inputCode").value.trim();
             inputCode = toEnglishNumber(inputCode);
 
@@ -99,14 +130,12 @@
             const finalPrice = (number * TAX_RATE * MULTIPLIER).toFixed(2);
             document.getElementById("result").innerText = `قیمت نهایی محصول: ${formatNumber(finalPrice)} تومان`;
 
-            // پاک کردن مقدار ورودی بعد از ۱۵ ثانیه
+            // پاک کردن مقدار ورودی بعد از 15 ثانیه
             setTimeout(() => {
                 document.getElementById("inputCode").value = "";
-                document.getElementById("result").innerText = "";
             }, 15000);
         }
 
-        // اضافه کردن event listener برای فشردن کلید Enter
         document.getElementById("inputCode").addEventListener("keyup", function(event) {
             if (event.key === "Enter") {
                 event.preventDefault();
