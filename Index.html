@@ -5,27 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>محاسبه قیمت محصول</title>
     <style>
-        body{font-family:Arial,sans-serif;background:#f0f4f8;display:flex;justify-content:center;align-items:center;height:100vh;margin:0}
-        .container{background:#fff;padding:20px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);max-width:400px;width:100%;text-align:center}
-        input,button{width:calc(100% - 20px);padding:10px;margin-bottom:10px;border:1px solid #ddd;border-radius:6px;font-size:16px}
-        button{background:#4CAF50;color:#fff;cursor:pointer}
-        #result{margin-top:20px;font-size:18px;font-weight:bold}
-        .notice{
-            margin-top:15px;
-            padding:10px;
-            background:#fff3cd;
-            color:#856404;
-            border:1px solid #ffeeba;
-            border-radius:6px;
-            font-size:14px;
-            display:flex;
-            align-items:center;
-            justify-content:center;
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
-        .notice::before{
-            content:"⚠️";
-            font-size:18px;
-            margin-left:8px;
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        input, button {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        button {
+            background: #4CAF50;
+            color: #fff;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .notice {
+            margin-top: 15px;
+            padding: 10px;
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+            border-radius: 6px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .notice::before {
+            content: "⚠️";
+            font-size: 18px;
+            margin-left: 8px;
         }
     </style>
 </head>
@@ -38,34 +69,41 @@
         <h3 id="result"></h3>
         <p class="notice">قیمت‌ها حدودی هستند. برای قیمت دقیق به صندوق مراجعه کنید.</p>
     </div>
+
     <script>
-        function toEnglishNumber(str){
+        function toEnglishNumber(str) {
             return str.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
                       .replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
         }
 
-        function formatNumber(num){
+        function formatNumber(num) {
             return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
 
-        function calculate(){
+        function calculate() {
             const TAX_RATE = 1.2, MULTIPLIER = 28.5; // مقدار ۲۸.۵ تنظیم شد
             let inputCode = document.getElementById("inputCode").value.trim();
             inputCode = toEnglishNumber(inputCode);
 
-            if (!/^\d+$/.test(inputCode)){
+            if (!/^\d+$/.test(inputCode)) {
                 alert("لطفاً فقط عدد وارد کنید!");
                 return;
             }
 
             const number = parseFloat(inputCode);
-            if (number <= 0){
+            if (number <= 0) {
                 alert("عدد باید بزرگ‌تر از صفر باشد!");
                 return;
             }
 
             const finalPrice = (number * TAX_RATE * MULTIPLIER).toFixed(2);
             document.getElementById("result").innerText = `قیمت نهایی محصول: ${formatNumber(finalPrice)} تومان`;
+
+            // پاک کردن مقدار ورودی بعد از ۱۵ ثانیه
+            setTimeout(() => {
+                document.getElementById("inputCode").value = "";
+                document.getElementById("result").innerText = "";
+            }, 15000);
         }
 
         // اضافه کردن event listener برای فشردن کلید Enter
