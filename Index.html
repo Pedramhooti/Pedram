@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>محاسبه قیمت حدودی محصول</title>
+    <link rel="apple-touch-icon" href="icon.png">
+    <meta name="apple-mobile-web-app-title" content="محاسبه قیمت نیلی">
+    <meta name="color-scheme" content="light dark">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,7 +15,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
         }
         .container {
@@ -112,7 +115,7 @@
         }
 
         function calculate() {
-            const TAX_RATE = 1.2, MULTIPLIER = 28.5;
+            const TAX_RATE = 1.2, MULTIPLIER = 27.5;
             let inputCode = document.getElementById("inputCode").value.trim();
             inputCode = toEnglishNumber(inputCode);
 
@@ -128,9 +131,11 @@
             }
 
             const finalPrice = (number * TAX_RATE * MULTIPLIER).toFixed(2);
-            document.getElementById("result").innerText = `قیمت نهایی محصول: ${formatNumber(finalPrice)} تومان`;
+            const resultText = `قیمت نهایی محصول: ${formatNumber(finalPrice)} تومان`;
+            document.getElementById("result").innerText = resultText;
 
-            // پاک کردن مقدار ورودی بعد از 15 ثانیه
+            localStorage.setItem("lastPrice", resultText);
+
             setTimeout(() => {
                 document.getElementById("inputCode").value = "";
             }, 15000);
@@ -142,6 +147,14 @@
                 calculate();
             }
         });
+
+        // نمایش آخرین قیمت ذخیره‌شده (در صورت وجود)
+        window.onload = function() {
+            const last = localStorage.getItem("lastPrice");
+            if (last) {
+                document.getElementById("result").innerText = last;
+            }
+        }
     </script>
 </body>
 </html>
