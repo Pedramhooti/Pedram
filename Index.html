@@ -115,7 +115,7 @@
         }
 
         function calculate() {
-            const TAX_RATE = 1.2, MULTIPLIER = 27.5;
+            const TAX_RATE = 1.2, MULTIPLIER = 24;
             let inputCode = document.getElementById("inputCode").value.trim();
             inputCode = toEnglishNumber(inputCode);
 
@@ -148,7 +148,6 @@
             }
         });
 
-        // نمایش آخرین قیمت ذخیره‌شده (در صورت وجود)
         window.onload = function() {
             const last = localStorage.getItem("lastPrice");
             if (last) {
