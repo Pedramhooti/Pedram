@@ -35,6 +35,9 @@
             border-radius: 6px;
             font-size: 16px;
         }
+        input[type="number"] {
+            direction: ltr;
+        }
         button {
             background: #4CAF50;
             color: #fff;
@@ -93,7 +96,7 @@
     <div class="container">
         <h2>محاسبه قیمت حدودی محصول</h2>
         <label for="inputCode">لطفاً کد روی محصول را وارد کنید:</label>
-        <input type="text" id="inputCode" placeholder="مثال: ۱۲۳۴">
+        <input type="number" id="inputCode" placeholder="مثال: ۱۲۳۴" inputmode="numeric">
         <button onclick="calculate()">محاسبه قیمت</button>
         <h3 id="result"></h3>
         <p class="notice">قیمت‌ها حدودی هستند. برای قیمت دقیق به صندوق مراجعه کنید.</p>
@@ -115,7 +118,7 @@
         }
 
         function calculate() {
-            const TAX_RATE = 1.2, MULTIPLIER = 24;
+            const TAX_RATE = 1.2, MULTIPLIER = 24.5;
             let inputCode = document.getElementById("inputCode").value.trim();
             inputCode = toEnglishNumber(inputCode);
 
