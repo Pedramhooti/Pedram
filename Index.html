@@ -2,14 +2,14 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>محاسبه قیمت حدودی محصول</title>
     <link rel="apple-touch-icon" href="icon.png">
     <meta name="apple-mobile-web-app-title" content="محاسبه قیمت نیلی">
-    <meta name="color-scheme" content="light dark">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: Tahoma, Arial, sans-serif;
             background: #f0f4f8;
             display: flex;
             flex-direction: column;
@@ -24,24 +24,22 @@
             border-radius: 8px;
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
             max-width: 400px;
-            width: 100%;
+            width: 90%;
             text-align: center;
         }
         input, button {
-            width: calc(100% - 20px);
+            width: 90%;
             padding: 10px;
             margin-bottom: 10px;
-            border: 1px solid #ddd;
+            border: 1px solid #ccc;
             border-radius: 6px;
             font-size: 16px;
-        }
-        input[type="number"] {
-            direction: ltr;
         }
         button {
             background: #4CAF50;
             color: #fff;
             cursor: pointer;
+            border: none;
         }
         #result {
             margin-top: 20px;
@@ -56,33 +54,29 @@
             border: 1px solid #ffeeba;
             border-radius: 6px;
             font-size: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
         .notice::before {
             content: "⚠️";
             font-size: 18px;
-            margin-left: 8px;
+            margin-left: 6px;
         }
         .link-container {
             margin-top: 20px;
             display: flex;
             flex-direction: column;
             gap: 10px;
-            justify-content: center;
             align-items: center;
         }
         .link-btn {
-            display: inline-block;
+            display: block;
             text-decoration: none;
             font-size: 16px;
             color: #fff;
             padding: 10px 15px;
             border-radius: 8px;
             font-weight: bold;
-            text-align: center;
             min-width: 180px;
+            text-align: center;
         }
         .instagram-link {
             background: #E4405F;
@@ -96,7 +90,7 @@
     <div class="container">
         <h2>محاسبه قیمت حدودی محصول</h2>
         <label for="inputCode">لطفاً کد روی محصول را وارد کنید:</label>
-        <input type="number" id="inputCode" placeholder="مثال: ۱۲۳۴" inputmode="numeric">
+        <input type="text" id="inputCode" placeholder="مثال: ۱۲۳۴">
         <button onclick="calculate()">محاسبه قیمت</button>
         <h3 id="result"></h3>
         <p class="notice">قیمت‌ها حدودی هستند. برای قیمت دقیق به صندوق مراجعه کنید.</p>
@@ -118,8 +112,8 @@
         }
 
         function calculate() {
-            const TAX_RATE = 1.2, MULTIPLIER = 24.5;
-            let inputCode = document.getElementById("inputCode").value.trim();
+            var TAX_RATE = 1.2, MULTIPLIER = 24.5;
+            var inputCode = document.getElementById("inputCode").value.trim();
             inputCode = toEnglishNumber(inputCode);
 
             if (!/^\d+$/.test(inputCode)) {
@@ -127,21 +121,32 @@
                 return;
             }
 
-            const number = parseFloat(inputCode);
+            var number = parseFloat(inputCode);
             if (number <= 0) {
                 alert("عدد باید بزرگ‌تر از صفر باشد!");
                 return;
             }
 
-            const finalPrice = (number * TAX_RATE * MULTIPLIER).toFixed(2);
-            const resultText = `قیمت نهایی محصول: ${formatNumber(finalPrice)} تومان`;
+            var finalPrice = (number * TAX_RATE * MULTIPLIER).toFixed(2);
+            var resultText = "قیمت نهایی محصول: " + formatNumber(finalPrice) + " تومان";
             document.getElementById("result").innerText = resultText;
 
-            localStorage.setItem("lastPrice", resultText);
+            try {
+                localStorage.setItem("lastPrice", resultText);
+            } catch (e) {}
 
-            setTimeout(() => {
+            setTimeout(function() {
                 document.getElementById("inputCode").value = "";
             }, 15000);
+        }
+
+        window.onload = function() {
+            try {
+                var last = localStorage.getItem("lastPrice");
+                if (last) {
+                    document.getElementById("result").innerText = last;
+                }
+            } catch (e) {}
         }
 
         document.getElementById("inputCode").addEventListener("keyup", function(event) {
@@ -150,13 +155,6 @@
                 calculate();
             }
         });
-
-        window.onload = function() {
-            const last = localStorage.getItem("lastPrice");
-            if (last) {
-                document.getElementById("result").innerText = last;
-            }
-        }
     </script>
 </body>
 </html>
