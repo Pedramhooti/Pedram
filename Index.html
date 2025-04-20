@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>محاسبه قیمت حدودی محصول</title>
     <link rel="apple-touch-icon" href="icon.png">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <meta name="apple-mobile-web-app-title" content="محاسبه قیمت نیلی">
     <style>
         body {
@@ -60,8 +61,11 @@
             font-size: 18px;
             margin-left: 6px;
         }
+        .link-section {
+            margin-top: 30px;
+            text-align: center;
+        }
         .link-container {
-            margin-top: 20px;
             display: flex;
             flex-direction: column;
             gap: 10px;
@@ -94,17 +98,24 @@
         <button onclick="calculate()">محاسبه قیمت</button>
         <h3 id="result"></h3>
         <p class="notice">قیمت‌ها حدودی هستند. برای قیمت دقیق به صندوق مراجعه کنید.</p>
-    </div>
 
-    <div class="link-container">
-        <a href="https://www.instagram.com/nili.face" target="_blank" class="link-btn instagram-link">ورود به صفحه اینستاگرام ما</a>
-        <a href="https://www.nili.shop" target="_blank" class="link-btn website-link">ورود به وب‌سایت ما</a>
+        <div class="link-section">
+            <h4>برای اطلاعات بیشتر:</h4>
+            <div class="link-container">
+                <a href="https://www.instagram.com/nili.face" target="_blank" class="link-btn instagram-link">ورود به صفحه اینستاگرام ما</a>
+                <a href="https://www.nili.shop" target="_blank" class="link-btn website-link">ورود به وب‌سایت ما</a>
+            </div>
+        </div>
     </div>
 
     <script>
         function toEnglishNumber(str) {
-            return str.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
-                      .replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+            const persian = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g];
+            const arabic  = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g];
+            for (let i = 0; i < 10; i++) {
+                str = str.replace(persian[i], i).replace(arabic[i], i);
+            }
+            return str;
         }
 
         function formatNumber(num) {
@@ -112,8 +123,8 @@
         }
 
         function calculate() {
-            var TAX_RATE = 1.2, MULTIPLIER = 24.5;
-            var inputCode = document.getElementById("inputCode").value.trim();
+            const TAX_RATE = 1.2, MULTIPLIER = 23;
+            let inputCode = document.getElementById("inputCode").value.trim();
             inputCode = toEnglishNumber(inputCode);
 
             if (!/^\d+$/.test(inputCode)) {
@@ -121,14 +132,14 @@
                 return;
             }
 
-            var number = parseFloat(inputCode);
+            let number = parseFloat(inputCode);
             if (number <= 0) {
                 alert("عدد باید بزرگ‌تر از صفر باشد!");
                 return;
             }
 
-            var finalPrice = (number * TAX_RATE * MULTIPLIER).toFixed(2);
-            var resultText = "قیمت نهایی محصول: " + formatNumber(finalPrice) + " تومان";
+            let finalPrice = Math.round(number * TAX_RATE * MULTIPLIER);
+            let resultText = "قیمت نهایی محصول: " + formatNumber(finalPrice) + " تومان";
             document.getElementById("result").innerText = resultText;
 
             try {
@@ -142,7 +153,7 @@
 
         window.onload = function() {
             try {
-                var last = localStorage.getItem("lastPrice");
+                let last = localStorage.getItem("lastPrice");
                 if (last) {
                     document.getElementById("result").innerText = last;
                 }
