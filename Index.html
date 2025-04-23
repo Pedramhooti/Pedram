@@ -8,6 +8,9 @@
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <meta name="apple-mobile-web-app-title" content="محاسبه قیمت نیلی">
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <style>
         body {
             font-family: Tahoma, Arial, sans-serif;
@@ -123,7 +126,7 @@
         }
 
         function calculate() {
-            const TAX_RATE = 1.2, MULTIPLIER = 22.5;
+            const TAX_RATE = 1.2, MULTIPLIER = 23.5;
             let inputCode = document.getElementById("inputCode").value.trim();
             inputCode = toEnglishNumber(inputCode);
 
