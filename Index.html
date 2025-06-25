@@ -92,17 +92,19 @@
             background: #007BFF;
         }
 
+        /* ساده‌ترین حالت برای rate-box فقط با عدد */
         .rate-box {
             position: fixed;
             bottom: 10px;
             left: 10px;
-            background: #e0f7fa;
-            color: #00695c;
-            padding: 8px 14px;
-            border-radius: 8px;
-            font-size: 14px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            font-size: 13px;
+            color: #000;
+            background: transparent;
+            padding: 0;
+            border: none;
+            box-shadow: none;
             z-index: 1000;
+            font-weight: normal;
         }
     </style>
 </head>
@@ -124,8 +126,8 @@
         </div>
     </div>
 
-    <!-- فقط نمایش عدد -->
-    <div class="rate-box" id="rateBox">۲۴</div>
+    <!-- فقط نمایش عدد ساده -->
+    <div class="rate-box" id="rateBox">۲۳</div>
 
     <script>
         const TAX_RATE = 1.2, MULTIPLIER = 23;
