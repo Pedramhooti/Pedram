@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محاسبه قیمت حدودی محصول</title>
+    <title>محاسبه قیمت محصول</title>
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <meta name="apple-mobile-web-app-title" content="محاسبه قیمت نیلی">
@@ -50,20 +50,6 @@
             font-size: 18px;
             font-weight: bold;
         }
-        .notice {
-            margin-top: 15px;
-            padding: 10px;
-            background: #fff3cd;
-            color: #856404;
-            border: 1px solid #ffeeba;
-            border-radius: 6px;
-            font-size: 14px;
-        }
-        .notice::before {
-            content: "⚠️";
-            font-size: 18px;
-            margin-left: 6px;
-        }
         .link-section {
             margin-top: 30px;
             text-align: center;
@@ -92,7 +78,6 @@
             background: #007BFF;
         }
 
-        /* ساده‌ترین حالت برای rate-box فقط با عدد */
         .rate-box {
             position: fixed;
             bottom: 10px;
@@ -110,12 +95,11 @@
 </head>
 <body>
     <div class="container">
-        <h2>محاسبه قیمت حدودی محصول</h2>
+        <h2>محاسبه قیمت محصول</h2>
         <label for="inputCode">لطفاً کد روی محصول را وارد کنید:</label>
         <input type="text" id="inputCode" placeholder="مثال: ۱۲۳۴">
         <button onclick="calculate()">محاسبه قیمت</button>
         <h3 id="result"></h3>
-        <p class="notice">قیمت‌ها حدودی هستند. برای قیمت دقیق به صندوق مراجعه کنید.</p>
 
         <div class="link-section">
             <h4>برای اطلاعات بیشتر:</h4>
@@ -126,7 +110,6 @@
         </div>
     </div>
 
-    <!-- فقط نمایش عدد ساده -->
     <div class="rate-box" id="rateBox">۲۳</div>
 
     <script>
@@ -181,7 +164,6 @@
                 }
             } catch (e) {}
 
-            // نمایش فقط عدد
             document.getElementById("rateBox").innerText = MULTIPLIER;
         }
 
