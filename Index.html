@@ -11,6 +11,7 @@
     <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
     <style>
         body {
             font-family: Tahoma, Arial, sans-serif;
@@ -77,7 +78,6 @@
         .website-link {
             background: #007BFF;
         }
-
         .rate-box {
             position: fixed;
             bottom: 10px;
@@ -97,7 +97,7 @@
     <div class="container">
         <h2>محاسبه قیمت محصول</h2>
         <label for="inputCode">لطفاً کد روی محصول را وارد کنید:</label>
-        <input type="text" id="inputCode" placeholder="مثال: ۱۲۳۴">
+        <input type="text" id="inputCode" placeholder="مثال: ۱۲۳۴ یا ۴.۵">
         <button onclick="calculate()">محاسبه قیمت</button>
         <h3 id="result"></h3>
 
@@ -118,26 +118,34 @@
         function toEnglishNumber(str) {
             const persian = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g];
             const arabic  = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g];
+
             for (let i = 0; i < 10; i++) {
                 str = str.replace(persian[i], i).replace(arabic[i], i);
             }
+
+            // تبدیل جداکننده‌های اعشار مختلف به نقطه
+            str = str.replace(/٫/g, ".")
+                     .replace(/,/g, ".")
+                     .replace(/\//g, ".");
+
             return str;
         }
 
         function formatNumber(num) {
-            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return num.toLocaleString("fa-IR");
         }
 
         function calculate() {
             let inputCode = document.getElementById("inputCode").value.trim();
             inputCode = toEnglishNumber(inputCode);
 
-            if (!/^\d+$/.test(inputCode)) {
-                alert("لطفاً فقط عدد وارد کنید!");
+            let number = parseFloat(inputCode);
+
+            if (isNaN(number)) {
+                alert("لطفاً عدد معتبر وارد کنید!");
                 return;
             }
 
-            let number = parseFloat(inputCode);
             if (number <= 0) {
                 alert("عدد باید بزرگ‌تر از صفر باشد!");
                 return;
